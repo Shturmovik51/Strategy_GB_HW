@@ -37,8 +37,8 @@ namespace Core
         {
             var marker = Instantiate(_markerPref, transform);
             marker.transform.localPosition = Vector3.zero;
-            var ps = marker.GetComponent<ParticleSystem>();
-            ps.startSize = _collider.bounds.size.x * 2;
+            var particleSystemMain = marker.GetComponent<ParticleSystem>().main;
+            particleSystemMain.startSizeMultiplier = _collider.bounds.size.x * 2;
             marker.SetActive(false);
             return marker;
         }
