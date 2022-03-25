@@ -9,7 +9,7 @@ namespace Utils
         
         public static T Inject<T>(this AssetsContext context, T target)
         {
-            var targetType = target.GetType();
+            var targetType = target.GetType();           
             var allFields = targetType.GetFields(BindingFlags.NonPublic 
                                                  | BindingFlags.Public 
                                                  | BindingFlags.Instance);

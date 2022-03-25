@@ -2,6 +2,6 @@
 {
     public interface IPatrolCommand : ICommand
     {
-        
+        public string Action { get; }
     }
 }

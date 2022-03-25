@@ -46,14 +46,31 @@ namespace UserControlSystem.UI.Presenter
 
         private void ONButtonClick(ICommandExecutor commandExecutor)
         {
-            var unitProducer = commandExecutor as CommandExecutorBase<IAttackCommand>;
-            if (unitProducer != null)
+            if (commandExecutor is CommandExecutorBase<IAttackCommand> AttackProducer)
             {
-                unitProducer.ExecuteSpecificCommand(_context.Inject(new AttackComand()));
+                AttackProducer.ExecuteSpecificCommand(_context.Inject(new AttackComand()));
                 return;
             }
-            throw new ApplicationException($"{nameof(CommandButtonsPresenter)}.{nameof(ONButtonClick)}: " +
-                                           $"Unknown type of commands executor: {commandExecutor.GetType().FullName}!");
+            else if (commandExecutor is CommandExecutorBase<IPatrolCommand> PatrolProducer)
+            {
+                PatrolProducer.ExecuteSpecificCommand(_context.Inject(new PatrolCommand()));
+                return;
+            }
+            else if (commandExecutor is CommandExecutorBase<IStopCommand> StopProducer)
+            {
+                StopProducer.ExecuteSpecificCommand(_context.Inject(new StopCommand()));
+                return;
+            }
+            else if (commandExecutor is CommandExecutorBase<IProduceUnitCommand> UnitProducer)
+            {
+                UnitProducer.ExecuteSpecificCommand(_context.Inject(new ProduceUnitCommandHeir()));
+                return;
+            }
+            else
+            {
+                throw new ApplicationException($"{nameof(CommandButtonsPresenter)}.{nameof(ONButtonClick)}: " +
+                                               $"Unknown type of commands executor: {commandExecutor.GetType().FullName}!");
+            }
         }
     }
 }

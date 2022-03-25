@@ -253,6 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2705263192954887247}
   - component: {fileID: 2705263192975411439}
+  - component: {fileID: 653042402}
   - component: {fileID: 2705263192100337692}
   m_Layer: 0
   m_Name: VegetationLarge04
@@ -306,6 +307,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2705263192957181609}
   m_Enabled: 1
+--- !u!114 &653042402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2705263192954912879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c7ea497a4abdd941be8b70c6b667cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 1000
+  _icon: {fileID: 21300000, guid: 712262adeebd1924cad36360993fca8a, type: 3}
 --- !u!114 &2705263192100337692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,12 +333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e01563d37a23f4e9bae517fb3e14dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitPrefab: {fileID: 3992309131016583621, guid: c5036c5c076556547b77b24d001c4e88, type: 3}
   _unitsParent: {fileID: 0}
-  _markerPref: {fileID: 4535921969363934455, guid: 3e61a47df989261499d1490d0dbdecb2, type: 3}
-  _maxHealth: 1000
-  _icon: {fileID: 21300000, guid: 712262adeebd1924cad36360993fca8a, type: 3}
-  _collider: {fileID: 1082995303024612617}
 --- !u!1 &8488480406898306391
 GameObject:
   m_ObjectHideFlags: 0

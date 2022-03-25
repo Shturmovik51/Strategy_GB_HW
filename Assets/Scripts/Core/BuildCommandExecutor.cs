@@ -3,21 +3,9 @@ using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
 using UnityEngine;
 
-public sealed class MainBuilding : CommandExecutorBase<IProduceUnitCommand>, ISelectable
+public sealed class BuildCommandExecutor : CommandExecutorBase<IProduceUnitCommand>
 {
-    public float Health => _health;
-    public float MaxHealth => _maxHealth;
-    public Sprite Icon => _icon;
-    private float _health;
-
     [SerializeField] private Transform _unitsParent;
-    [SerializeField] private float _maxHealth;
-    [SerializeField] private Sprite _icon;
-
-    private void Start()
-    {
-        _health = _maxHealth;
-    }
 
     public override void ExecuteSpecificCommand(IProduceUnitCommand command) 
         => Instantiate(command.UnitPrefab, 
