@@ -6,6 +6,7 @@ namespace Abstractions
     {
         float Health { get; }
         float MaxHealth { get; }
+        GameObject Marker { get; }
         Sprite Icon { get; }
     }
 }

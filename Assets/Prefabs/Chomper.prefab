@@ -2801,6 +2801,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 50
   _icon: {fileID: 21300000, guid: 9908913e928c42d4f9f1891893bbc424, type: 3}
+  _markerPref: {fileID: 4535921969363934455, guid: 3e61a47df989261499d1490d0dbdecb2, type: 3}
+  _collider: {fileID: 1804903866}
 --- !u!114 &4890186703009742391
 MonoBehaviour:
   m_ObjectHideFlags: 0
