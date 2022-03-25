@@ -12,9 +12,8 @@ namespace UserControlSystem
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Image _sliderBackground;
         [SerializeField] private Image _sliderFillImage;
-        [SerializeField] private SelectableValue _selectedValue;
 
-        private ISelectable _lastTarget;
+        [SerializeField] private SelectableValue _selectedValue;
 
         private void Start()
         {
@@ -23,16 +22,10 @@ namespace UserControlSystem
         }
         
         private void ONSelected(ISelectable selected)
-        {    
+        {
             _selectedImage.enabled = selected != null;
             _healthSlider.gameObject.SetActive(selected != null);
             _text.enabled = selected != null;
-
-            if (_lastTarget != null)
-            {
-                _lastTarget.Marker.SetActive(false);
-                _lastTarget = null;
-            }
 
             if (selected != null)
             {
@@ -44,9 +37,6 @@ namespace UserControlSystem
                 var color = Color.Lerp(Color.red, Color.green, selected.Health / (float)selected.MaxHealth);
                 _sliderBackground.color = color * 0.5f;
                 _sliderFillImage.color = color;
-
-                _lastTarget = selected;
-                selected.Marker.SetActive(true);
             }
         }
     }
