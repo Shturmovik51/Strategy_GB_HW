@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Abstractions;
+using Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UserControlSystem;
@@ -12,16 +13,18 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
     [SerializeField] private Transform _groundTransform;
     
     private Vector3Value _groundClicksRMB;
+    private GameObjectValue _targetClickRMB;
     private SelectableValue _selectedObject;
     private Plane _groundPlane;
     
     private void Start() => _groundPlane = new Plane(_groundTransform.up, 0);
 
     [Inject] 
-    private void Init(Vector3Value groundClicksRMB, SelectableValue selectedObject)
+    private void Init(Vector3Value groundClicksRMB, SelectableValue selectedObject, GameObjectValue gameObjectValue)
     {
         _groundClicksRMB = groundClicksRMB;
         _selectedObject = selectedObject;
+        _targetClickRMB = gameObjectValue;
     }
 
     private void Update()
@@ -49,10 +52,21 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
         }
         else
         {
-            if (_groundPlane.Raycast(ray, out var enter))
+            if (Physics.Raycast(ray, out var hit))
             {
-                _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
+                var go = hit.collider.gameObject;
+                if(go.TryGetComponent<MainBuilding>(out var building) || go.TryGetComponent<MainUnit>(out var unit))
+                    _targetClickRMB.SetValue(go);
+                else
+                    _groundClicksRMB.SetValue(hit.point);
             }
+
+            //if (_groundPlane.Raycast(ray, out var enter))
+            //{
+            //    Debug.Log("w");
+            //    _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
+            //    _targetClickRMB.SetValue(null);
+            //}            
         }
     }
 }

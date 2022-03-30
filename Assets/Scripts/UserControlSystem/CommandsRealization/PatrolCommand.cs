@@ -1,9 +1,15 @@
 using Abstractions.Commands.CommandsInterfaces;
+using UnityEngine;
 
 namespace UserControlSystem.CommandsRealization
 {
     public class PatrolCommand : IPatrolCommand
     {
-        public string Action { get; } = "Патрулирую";
+        public Vector3 Target { get; }
+
+        public PatrolCommand(Vector3 target)
+        {
+            Target = target;
+        }
     }
 }

@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 2705263192975411439}
   - component: {fileID: 515106855430849596}
   - component: {fileID: 2705263192100337692}
+  - component: {fileID: 952013409}
   m_Layer: 0
   m_Name: VegetationLarge04
   m_TagString: Untagged
@@ -276,7 +277,6 @@ Transform:
   - {fileID: 2705263192954887245}
   - {fileID: 2705263192954887243}
   - {fileID: 2705263192954887241}
-  - {fileID: 2549524246947761085}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -335,44 +335,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitsParent: {fileID: 0}
---- !u!1 &8488480406898306391
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2549524246947761085}
-  - component: {fileID: 1082995303024612617}
-  m_Layer: 0
-  m_Name: Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2549524246947761085
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8488480406898306391}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2705263192954887247}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1082995303024612617
+--- !u!65 &952013409
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8488480406898306391}
+  m_GameObject: {fileID: 2705263192954912879}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1

@@ -4,6 +4,6 @@ namespace UserControlSystem.CommandsRealization
 {
     public class StopCommand : IStopCommand
     {
-        public string Action { get; } = "Стою";
+        
     }
 }
