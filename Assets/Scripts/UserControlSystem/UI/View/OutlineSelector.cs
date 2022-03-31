@@ -1,46 +1,45 @@
 using UnityEngine;
 
-
 public sealed class OutlineSelector : MonoBehaviour
 {
-    //[SerializeField] private Outline[] _outlineComponents;
+    [SerializeField] private Outline[] _outlineComponents;
 
-    //private bool _isSelectedCache;
+    private bool _isSelectedCache;
 
-    //private void Start() => DisableOutline();
-    
-    //public void SetSelected(bool isSelected)
-    //{
-    //    if (isSelected == _isSelectedCache)
-    //    {
-    //        return;
-    //    }
+    private void Start() => DisableOutline();
 
-    //    if (isSelected)
-    //    {
-    //        EnableOutline();
-    //    }
-    //    else
-    //    {
-    //        DisableOutline();
-    //    }
-        
-    //    _isSelectedCache = isSelected;
-    //}
+    public void SetSelected(bool isSelected)
+    {
+        if (isSelected == _isSelectedCache)
+        {
+            return;
+        }
 
-    //private void DisableOutline()
-    //{
-    //    for (int i = 0; i < _outlineComponents.Length; i++)
-    //    {
-    //        _outlineComponents[i].enabled = false;
-    //    }
-    //}
+        if (isSelected)
+        {
+            EnableOutline();
+        }
+        else
+        {
+            DisableOutline();
+        }
 
-    //private void EnableOutline()
-    //{
-    //    for (int i = 0; i < _outlineComponents.Length; i++)
-    //    {
-    //        _outlineComponents[i].enabled = true;
-    //    }
-    //}
+        _isSelectedCache = isSelected;
+    }
+
+    private void DisableOutline()
+    {
+        for (int i = 0; i < _outlineComponents.Length; i++)
+        {
+            _outlineComponents[i].enabled = false;
+        }
+    }
+
+    private void EnableOutline()
+    {
+        for (int i = 0; i < _outlineComponents.Length; i++)
+        {
+            _outlineComponents[i].enabled = true;
+        }
+    }
 }
