@@ -5,7 +5,7 @@ using UserControlSystem;
 public class OutlineSelectorPresenter : MonoBehaviour
 {
     [SerializeField] private SelectableValue _selectableValue;
-
+    
     private OutlineSelector[] _outlineSelectors;
     private ISelectable _currentSelectable;
 
@@ -20,7 +20,7 @@ public class OutlineSelectorPresenter : MonoBehaviour
         {
             return;
         }
-
+        
 
         SetSelected(_outlineSelectors, false);
         _outlineSelectors = null;
@@ -37,9 +37,9 @@ public class OutlineSelectorPresenter : MonoBehaviour
                 SetSelected(_outlineSelectors, false);
             }
         }
-
+        
         _currentSelectable = selectable;
-
+        
         static void SetSelected(OutlineSelector[] selectors, bool value)
         {
             if (selectors != null)
@@ -51,4 +51,5 @@ public class OutlineSelectorPresenter : MonoBehaviour
             }
         }
     }
+
 }

@@ -1,11 +1,15 @@
 ﻿using Abstractions.Commands.CommandsInterfaces;
+using Core;
 using UnityEngine;
 
 namespace Abstractions.Commands.CommandExecutors
 {
     public class StopCommandExecutor : CommandExecutorBase<IStopCommand>
     {
-        public override void ExecuteSpecificCommand(IStopCommand command) 
-            => Debug.Log($"{name} is on stop!");
+        [SerializeField] private UnitMovementStop _stop;
+        public override void ExecuteSpecificCommand(IStopCommand command)
+        {
+            _stop.OnStop?.Invoke();
+        }            
     }
 }

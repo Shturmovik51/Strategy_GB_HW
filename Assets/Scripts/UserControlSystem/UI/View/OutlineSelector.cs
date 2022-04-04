@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public sealed class OutlineSelector : MonoBehaviour
 {
     [SerializeField] private Outline[] _outlineComponents;
@@ -7,7 +8,7 @@ public sealed class OutlineSelector : MonoBehaviour
     private bool _isSelectedCache;
 
     private void Start() => DisableOutline();
-
+    
     public void SetSelected(bool isSelected)
     {
         if (isSelected == _isSelectedCache)
@@ -23,7 +24,7 @@ public sealed class OutlineSelector : MonoBehaviour
         {
             DisableOutline();
         }
-
+        
         _isSelectedCache = isSelected;
     }
 

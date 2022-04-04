@@ -6,6 +6,6 @@ namespace Abstractions.Commands.CommandExecutors
     public class PatrolCommandExecutor : CommandExecutorBase<IPatrolCommand>
     {
         public override void ExecuteSpecificCommand(IPatrolCommand command) 
-            => Debug.Log($"{name} is moving to {command.Target} with extrim caution!");
+            => Debug.Log($"{name} is moving to with extrim caution!"); //{command.Target}
     }
 }
