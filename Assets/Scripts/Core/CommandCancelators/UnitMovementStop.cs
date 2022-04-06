@@ -6,10 +6,9 @@ using Utils;
 namespace Core
 {
     public class UnitMovementStop : MonoBehaviour, IAwaitable<AsyncExtensions.Void>
-    {
-        public Action OnStop;
-
+    {  
         [SerializeField] private NavMeshAgent _agent;
+        public Action<AsyncExtensions.Void> OnNewValue { get; set; }
 
         private void Update()
         {
@@ -19,7 +18,7 @@ namespace Core
                 {
                     if (!_agent.hasPath || _agent.velocity.sqrMagnitude == 0f)
                     {
-                        OnStop?.Invoke();
+                        OnNewValue?.Invoke(new AsyncExtensions.Void());
                     }
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using Abstractions.Commands.CommandsInterfaces;
 using Core;
 using UnityEngine;
+using Utils;
 
 namespace Abstractions.Commands.CommandExecutors
 {
@@ -8,7 +9,7 @@ namespace Abstractions.Commands.CommandExecutors
     {
         public override void ExecuteSpecificCommand(IStopCommand command)
         {
-            GetComponent<UnitMovementStop>().OnStop?.Invoke();
+            GetComponent<UnitMovementStop>().OnNewValue?.Invoke(new AsyncExtensions.Void());
         }            
     }
 }

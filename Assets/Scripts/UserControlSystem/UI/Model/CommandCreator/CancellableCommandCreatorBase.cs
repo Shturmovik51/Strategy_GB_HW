@@ -30,7 +30,7 @@ namespace UserControlSystem
         }
         
         protected abstract TCommand CreateCommand(TArgument argument);
-        
+
         public override void ProcessCancel()
         {
             base.ProcessCancel();

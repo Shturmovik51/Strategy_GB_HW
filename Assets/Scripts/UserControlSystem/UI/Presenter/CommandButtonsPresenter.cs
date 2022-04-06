@@ -8,6 +8,7 @@ using UserControlSystem.CommandsRealization;
 using UserControlSystem.UI.View;
 using Utils;
 using Zenject;
+using UniRx;
 
 namespace UserControlSystem.UI.Presenter
 {
@@ -25,8 +26,9 @@ namespace UserControlSystem.UI.Presenter
             _model.OnCommandCancel += _view.UnblockAllInteractions;
             _model.OnCommandAccepted += _view.BlockInteractions;
 
-            _selectable.OnNewValue += ONSelected;
-            ONSelected(_selectable.CurrentValue);
+            //_selectable.OnNewValue += ONSelected;
+            //ONSelected(_selectable.CurrentValue);
+            _selectable.Subscribe(ONSelected);
         }
 
         private void ONSelected(ISelectable selectable)

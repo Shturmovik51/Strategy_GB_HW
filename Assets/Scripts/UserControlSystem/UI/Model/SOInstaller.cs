@@ -17,8 +17,8 @@ namespace UserControlSystem
         public override void InstallBindings()
         {
             Container.Bind<AssetsContext>().FromInstance(_assetsContext);
-            Container.Bind<Vector3Value>().FromInstance(_vector3Value);
             Container.Bind<SelectableValue>().FromInstance(_selectableValue);
+            Container.Bind<Vector3Value>().FromInstance(_vector3Value);
             Container.Bind<GameObjectValue>().FromInstance(_gameObjectValue);
         }
     }

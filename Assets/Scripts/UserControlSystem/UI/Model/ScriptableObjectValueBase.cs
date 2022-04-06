@@ -6,9 +6,9 @@ namespace UserControlSystem
 {
     [CreateAssetMenu(fileName = nameof(ScriptableObjectValueBase<T>), menuName = "Strategy Game/" + nameof(ScriptableObjectValueBase<T>), order = 0)]
     public class ScriptableObjectValueBase<T> : ScriptableObject, IAwaitable<T>
-    {
+    {       
         public T CurrentValue { get; private set; }
-        public Action<T> OnNewValue;
+        public Action<T> OnNewValue { get; set; }
         public void SetValue(T value)
         {
             CurrentValue = value;
