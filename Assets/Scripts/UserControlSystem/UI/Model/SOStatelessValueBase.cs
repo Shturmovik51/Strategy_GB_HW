@@ -26,7 +26,7 @@ namespace UserControlSystem
         }        
         public IAwaiter<T> GetAwaiter()
         {
-            return new NewValueNotifier<T>(this);
+            return new NewStatelessValueNotifier<T>(this);
         }
     }
 }

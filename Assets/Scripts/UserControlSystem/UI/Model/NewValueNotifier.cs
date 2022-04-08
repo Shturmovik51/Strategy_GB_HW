@@ -5,7 +5,7 @@ namespace UserControlSystem
     public class NewValueNotifier<TAwaited> : AwaiterBase<TAwaited>
     {
         private readonly IAwaitable<TAwaited> _scriptableObjectValueBase;
-       
+        
         public NewValueNotifier(IAwaitable<TAwaited> scriptableObjectValueBase)
         {
             _scriptableObjectValueBase = scriptableObjectValueBase;
@@ -16,6 +16,6 @@ namespace UserControlSystem
         {
             _scriptableObjectValueBase.OnNewValue -= ONNewValue;
             OnWaitFinish(obj);
-        }               
+        }
     }
 }
