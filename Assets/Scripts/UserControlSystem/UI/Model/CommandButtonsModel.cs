@@ -16,6 +16,7 @@ namespace UserControlSystem
         [Inject] private CommandCreatorBase<IStopCommand> _stopper;
         [Inject] private CommandCreatorBase<IMoveCommand> _mover;
         [Inject] private CommandCreatorBase<IPatrolCommand> _patroller;
+        [Inject] private CommandCreatorBase<ISetStackPointCommand> _pointProvider;
 
         private bool _commandIsPending;
 
@@ -23,7 +24,7 @@ namespace UserControlSystem
         {
             if (_commandIsPending)
             {
-                processOnCancel();
+                ProcessOnCancel();
             }
             _commandIsPending = true;
             OnCommandAccepted?.Invoke(commandExecutor);
@@ -33,6 +34,7 @@ namespace UserControlSystem
             _stopper.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(commandExecutor, command));
             _mover.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(commandExecutor, command));
             _patroller.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(commandExecutor, command));
+            _pointProvider.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(commandExecutor, command));
         }
 
         public void ExecuteCommandWrapper(ICommandExecutor commandExecutor, object command)
@@ -45,16 +47,17 @@ namespace UserControlSystem
         public void OnSelectionChanged()
         {
             _commandIsPending = false;
-            processOnCancel();
+            ProcessOnCancel();
         }
 
-        private void processOnCancel()
+        private void ProcessOnCancel()
         {
             _unitProducer.ProcessCancel();
             _attacker.ProcessCancel();
             _stopper.ProcessCancel();
             _mover.ProcessCancel();
             _patroller.ProcessCancel();
+            _pointProvider.ProcessCancel();
 
             OnCommandCancel?.Invoke();
         }

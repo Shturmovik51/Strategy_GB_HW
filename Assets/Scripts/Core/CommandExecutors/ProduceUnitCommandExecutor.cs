@@ -3,6 +3,7 @@ using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
 using UniRx;
 using UnityEngine;
+using UserControlSystem.CommandsRealization;
 using Random = UnityEngine.Random;
 
 namespace Core.CommandExecutors
@@ -13,7 +14,9 @@ namespace Core.CommandExecutors
 
         [SerializeField] private Transform _unitsParent;
         [SerializeField] private int _maximumUnitsInQueue = 6;
+        [SerializeField] private Transform _spawnPoint;
 
+        private Vector3 _stackPoint;
         private ReactiveCollection<IUnitProductionTask> _queue = new ReactiveCollection<IUnitProductionTask>();
 
         private void Update()
@@ -27,14 +30,23 @@ namespace Core.CommandExecutors
             innerTask.TimeLeft -= Time.deltaTime;
             if (innerTask.TimeLeft <= 0)
             {
-                removeTaskAtIndex(0);
-                Instantiate(innerTask.UnitPrefab, new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity, _unitsParent);
+                RemoveTaskAtIndex(0);
+                var instantiatedObject = Instantiate(innerTask.UnitPrefab, _spawnPoint.position, Quaternion.identity, _unitsParent);
+                var moveCommandExecutor = instantiatedObject.GetComponent<MoveCommandExecutor>();
+
+                moveCommandExecutor.ExecuteSpecificCommand(
+                    new MoveCommand(_stackPoint == Vector3.zero ? _spawnPoint.position : _stackPoint));
             }
         }
 
-        public void Cancel(int index) => removeTaskAtIndex(index);
+        public void SetStackPoint(Vector3 point)
+        {
+            _stackPoint = point;
+        }
 
-        private void removeTaskAtIndex(int index)
+        public void Cancel(int index) => RemoveTaskAtIndex(index);
+
+        private void RemoveTaskAtIndex(int index)
         {
             for (int i = index; i < _queue.Count - 1; i++)
             {
