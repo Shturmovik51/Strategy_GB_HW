@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public sealed class OutlineSelector : MonoBehaviour
 {
     [SerializeField] private Outline[] _outlineComponents;

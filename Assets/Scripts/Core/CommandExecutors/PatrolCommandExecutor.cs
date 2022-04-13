@@ -1,11 +1,14 @@
-﻿using Abstractions.Commands.CommandsInterfaces;
+﻿using Abstractions.Commands;
+using Abstractions.Commands.CommandsInterfaces;
 using UnityEngine;
 
-namespace Abstractions.Commands.CommandExecutors
+namespace Core.CommandExecutors
 {
     public class PatrolCommandExecutor : CommandExecutorBase<IPatrolCommand>
     {
-        public override void ExecuteSpecificCommand(IPatrolCommand command) 
-            => Debug.Log($"{name} is moving from {command.From} to {command.To}");
+        public override void ExecuteSpecificCommand(IPatrolCommand command)
+        {
+            Debug.Log($"{name} patroling!");
+        }
     }
 }

@@ -5,8 +5,8 @@ using Utils;
 
 namespace UserControlSystem
 {
-    [CreateAssetMenu(fileName = nameof(SOStatelessValueBase<T>), menuName = "Strategy Game/" + nameof(SOStatelessValueBase<T>), order = 0)]
-    public class SOStatelessValueBase<T> : ScriptableObject, IObservable<T>, IAwaitable<T>
+    [CreateAssetMenu(fileName = nameof(StatelessScriptableObjectValueBase<T>), menuName = "Strategy Game/" + nameof(StatelessScriptableObjectValueBase<T>), order = 0)]
+    public class StatelessScriptableObjectValueBase<T> : ScriptableObject, IObservable<T>, IAwaitable<T>
     {
         public Action<T> OnNewValue { get; set; }
 

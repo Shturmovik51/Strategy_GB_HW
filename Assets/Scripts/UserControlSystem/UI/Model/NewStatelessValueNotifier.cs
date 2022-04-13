@@ -6,9 +6,18 @@ namespace UserControlSystem
 {
     public class NewStatelessValueNotifier<T> : AwaiterBase<T>
     {
-        public NewStatelessValueNotifier(SOStatelessValueBase<T> scriptableObjectValue)
+        private readonly StatelessScriptableObjectValueBase<T> _scriptableObjectValueBase;
+
+        public NewStatelessValueNotifier(StatelessScriptableObjectValueBase<T> scriptableObjectValueBase)
         {
-            scriptableObjectValue.CurrentValue.Subscribe(OnWaitFinish);
+            _scriptableObjectValueBase = scriptableObjectValueBase;
+            _scriptableObjectValueBase.OnNewValue += ONNewValue;
+        }
+
+        private void ONNewValue(T obj)
+        {
+            _scriptableObjectValueBase.OnNewValue -= ONNewValue;
+            OnWaitFinish(obj);
         }
     }
 }

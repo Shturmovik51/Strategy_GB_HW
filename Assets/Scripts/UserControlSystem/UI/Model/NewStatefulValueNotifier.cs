@@ -5,10 +5,19 @@ using Utils;
 namespace UserControlSystem
 {
     public class NewStatefulValueNotifier<T> : AwaiterBase<T>
-    {
-        public NewStatefulValueNotifier(SOStatefulValueBase<T> scriptableObjectValue)
+    {        
+        private readonly StatefulScriptableObjectValueBase<T> _scriptableObjectValueBase;
+
+        public NewStatefulValueNotifier(StatefulScriptableObjectValueBase<T> scriptableObjectValueBase)
         {
-            scriptableObjectValue.CurrentValue.Subscribe(OnWaitFinish);
+            _scriptableObjectValueBase = scriptableObjectValueBase;
+            _scriptableObjectValueBase.OnNewValue += ONNewValue;
+        }
+
+        private void ONNewValue(T obj)
+        {
+            _scriptableObjectValueBase.OnNewValue -= ONNewValue;
+            OnWaitFinish(obj);
         }
     }
 }

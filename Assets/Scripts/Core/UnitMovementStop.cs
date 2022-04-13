@@ -6,9 +6,10 @@ using Utils;
 namespace Core
 {
     public class UnitMovementStop : MonoBehaviour, IAwaitable<AsyncExtensions.Void>
-    {  
+    {
+        public event Action OnStop;
+
         [SerializeField] private NavMeshAgent _agent;
-        public Action<AsyncExtensions.Void> OnNewValue { get; set; }
 
         private void Update()
         {
@@ -18,15 +19,12 @@ namespace Core
                 {
                     if (!_agent.hasPath || _agent.velocity.sqrMagnitude == 0f)
                     {
-                        OnNewValue?.Invoke(new AsyncExtensions.Void());
+                        OnStop?.Invoke();
                     }
                 }
             }
         }
 
-        public IAwaiter<AsyncExtensions.Void> GetAwaiter() 
-        { 
-            return new StopAwaiter(this); 
-        }
+        public IAwaiter<AsyncExtensions.Void> GetAwaiter() => new StopAwaiter(this);
     }
 }

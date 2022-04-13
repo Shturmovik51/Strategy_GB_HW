@@ -5,17 +5,17 @@ namespace Core
     public class StopAwaiter : AwaiterBase<AsyncExtensions.Void>
     {
         private readonly UnitMovementStop _unitMovementStop;
-       
+
         public StopAwaiter(UnitMovementStop unitMovementStop)
         {
             _unitMovementStop = unitMovementStop;
-            _unitMovementStop.OnNewValue += ONStop;
+            _unitMovementStop.OnStop += ONStop;
         }
 
-        private void ONStop(AsyncExtensions.Void parameter)
+        private void ONStop()
         {
-            _unitMovementStop.OnNewValue -= ONStop;
-            OnWaitFinish(parameter);
-        }        
+            _unitMovementStop.OnStop -= ONStop;
+            OnWaitFinish(new AsyncExtensions.Void());
+        }
     }
 }
