@@ -2,14 +2,18 @@ using Abstractions;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
 using Core.CommandExecutors;
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class SetStackPointCommandExecutor : CommandExecutorBase<ISetStackPointCommand>
+namespace Core.CommandExecutors
 {
-    public override void ExecuteSpecificCommand(ISetStackPointCommand command)
+    public class SetStackPointCommandExecutor : CommandExecutorBase<ISetStackPointCommand>
     {
-        var produceCommandExecutor = GetComponent<ProduceUnitCommandExecutor>();
-        produceCommandExecutor.SetStackPoint(command.Point);
-        Debug.Log($"{command.Point} is set as stack position for units!");
+        public override async Task ExecuteSpecificCommand(ISetStackPointCommand command)
+        {
+            var produceCommandExecutor = GetComponent<ProduceUnitCommandExecutor>();
+            produceCommandExecutor.SetStackPoint(command.Point);
+            Debug.Log($"{command.Point} is set as stack position for units!");
+        }
     }
 }

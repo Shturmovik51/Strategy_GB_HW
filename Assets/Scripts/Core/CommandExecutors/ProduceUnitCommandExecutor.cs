@@ -1,9 +1,11 @@
 ﻿using Abstractions;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
+using System.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using UserControlSystem.CommandsRealization;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Core.CommandExecutors
@@ -11,6 +13,8 @@ namespace Core.CommandExecutors
     public class ProduceUnitCommandExecutor : CommandExecutorBase<IProduceUnitCommand>, IUnitProducer
     {
         public IReadOnlyReactiveCollection<IUnitProductionTask> Queue => _queue;
+
+        [Inject] private DiContainer _diContainer;
 
         [SerializeField] private Transform _unitsParent;
         [SerializeField] private int _maximumUnitsInQueue = 6;
@@ -31,10 +35,11 @@ namespace Core.CommandExecutors
             if (innerTask.TimeLeft <= 0)
             {
                 RemoveTaskAtIndex(0);
-                var instantiatedObject = Instantiate(innerTask.UnitPrefab, _spawnPoint.position, Quaternion.identity, _unitsParent);
+                var instantiatedObject = 
+                    _diContainer.InstantiatePrefab(innerTask.UnitPrefab, _spawnPoint.position, Quaternion.identity, _unitsParent);
                 var moveCommandExecutor = instantiatedObject.GetComponent<MoveCommandExecutor>();
 
-                moveCommandExecutor.ExecuteSpecificCommand(
+                var task = moveCommandExecutor.ExecuteSpecificCommand(
                     new MoveCommand(_stackPoint == Vector3.zero ? _spawnPoint.position : _stackPoint));
             }
         }
@@ -55,8 +60,8 @@ namespace Core.CommandExecutors
             _queue.RemoveAt(_queue.Count - 1);
         }
 
-        public override void ExecuteSpecificCommand(IProduceUnitCommand command)
-        {
+        public override async Task ExecuteSpecificCommand(IProduceUnitCommand command)
+        {             
             _queue.Add(new UnitProductionTask(command.ProductionTime, command.Icon, command.UnitPrefab, command.UnitName));
         }
     }

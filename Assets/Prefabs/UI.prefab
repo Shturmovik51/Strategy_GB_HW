@@ -715,6 +715,7 @@ MonoBehaviour:
   _patrolButton: {fileID: 5854994869893971477}
   _stopButton: {fileID: 6128836849119594755}
   _produceUnitButton: {fileID: 4785363537042584551}
+  _setStackPointButton: {fileID: 7858490055766544751}
 --- !u!114 &1626032894340244491
 MonoBehaviour:
   m_ObjectHideFlags: 0
