@@ -625,11 +625,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &831924336 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7858490055766544751, guid: 5dd235a43d36f9347a1a35df441f10d9, type: 3}
-  m_PrefabInstance: {fileID: 2120972456}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &904681549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1115,10 +1110,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainBuilding
       objectReference: {fileID: 0}
-    - target: {fileID: 5515141571805766997, guid: f10450f8f9a77884abd88582ae11475b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.79
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f10450f8f9a77884abd88582ae11475b, type: 3}
 --- !u!4 &1557197252 stripped
@@ -1292,10 +1283,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 30251973803197052, guid: 5dd235a43d36f9347a1a35df441f10d9, type: 3}
-      propertyPath: _setStackPointButton
-      value: 
-      objectReference: {fileID: 831924336}
     - target: {fileID: 417910617687609525, guid: 5dd235a43d36f9347a1a35df441f10d9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1542,10 +1529,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7240315552003082003, guid: 5dd235a43d36f9347a1a35df441f10d9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7858490055766544751, guid: 5dd235a43d36f9347a1a35df441f10d9, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
