@@ -12,6 +12,7 @@ namespace Core.CommandExecutors
         public override async Task ExecuteSpecificCommand(IStopCommand command)
         {
             CancellationTokenSource?.Cancel();
+            await Task.CompletedTask;
         }
     }
 }

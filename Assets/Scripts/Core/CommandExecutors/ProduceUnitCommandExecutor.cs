@@ -1,12 +1,11 @@
-﻿using Abstractions;
+﻿using System.Threading.Tasks;
+using Abstractions;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
-using System.Threading.Tasks;
+using Assets.Scripts.Core;
 using UniRx;
 using UnityEngine;
-using UserControlSystem.CommandsRealization;
 using Zenject;
-using Random = UnityEngine.Random;
 
 namespace Core.CommandExecutors
 {
@@ -14,11 +13,11 @@ namespace Core.CommandExecutors
     {
         public IReadOnlyReactiveCollection<IUnitProductionTask> Queue => _queue;
 
-        [Inject] private DiContainer _diContainer;
-
         [SerializeField] private Transform _unitsParent;
         [SerializeField] private int _maximumUnitsInQueue = 6;
         [SerializeField] private Transform _spawnPoint;
+
+        [Inject] private DiContainer _diContainer;
 
         private Vector3 _stackPoint;
         private ReactiveCollection<IUnitProductionTask> _queue = new ReactiveCollection<IUnitProductionTask>();
@@ -35,13 +34,8 @@ namespace Core.CommandExecutors
             if (innerTask.TimeLeft <= 0)
             {
                 RemoveTaskAtIndex(0);
-                var instantiatedObject = 
-                    _diContainer.InstantiatePrefab(innerTask.UnitPrefab, _spawnPoint.position, Quaternion.identity, _unitsParent);
-                var moveCommandExecutor = instantiatedObject.GetComponent<MoveCommandExecutor>();
-
-                var task = moveCommandExecutor.ExecuteSpecificCommand(
-                    new MoveCommand(_stackPoint == Vector3.zero ? _spawnPoint.position : _stackPoint));
-            }
+                _diContainer.InstantiatePrefab(innerTask.UnitPrefab, _spawnPoint.position, Quaternion.identity, _unitsParent);
+            }                
         }
 
         public void SetStackPoint(Vector3 point)
@@ -61,8 +55,14 @@ namespace Core.CommandExecutors
         }
 
         public override async Task ExecuteSpecificCommand(IProduceUnitCommand command)
-        {             
-            _queue.Add(new UnitProductionTask(command.ProductionTime, command.Icon, command.UnitPrefab, command.UnitName));
+        {
+            var instance = _diContainer.InstantiatePrefab(command.UnitPrefab, transform.position, Quaternion.identity, _unitsParent);
+            var queue = instance.GetComponent<ICommandsQueue>();
+            var mainBuilding = GetComponent<MainBuilding>();
+            var factionMember = instance.GetComponent<FactionMember>();
+            factionMember.SetFaction(GetComponent<FactionMember>().FactionId);
+            queue.EnqueueCommand(new MoveCommand(mainBuilding.RallyPoint));
+            await Task.CompletedTask;
         }
     }
 }

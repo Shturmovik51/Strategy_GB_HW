@@ -10,6 +10,11 @@ public sealed class OutlineSelector : MonoBehaviour
     
     public void SetSelected(bool isSelected)
     {
+        if (this == null)
+        {
+            return;
+        }
+        
         if (isSelected == _isSelectedCache)
         {
             return;

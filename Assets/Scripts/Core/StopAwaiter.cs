@@ -15,7 +15,7 @@ namespace Core
         private void ONStop()
         {
             _unitMovementStop.OnStop -= ONStop;
-            OnWaitFinish(new AsyncExtensions.Void());
+            ONWaitFinish(new AsyncExtensions.Void());
         }
     }
 }

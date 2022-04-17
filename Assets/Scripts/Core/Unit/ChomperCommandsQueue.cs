@@ -12,8 +12,7 @@ public class ChomperCommandsQueue : MonoBehaviour, ICommandsQueue
     [Inject] CommandExecutorBase<IAttackCommand> _attackCommandExecutor;
     [Inject] CommandExecutorBase<IStopCommand> _stopCommandExecutor;
 
-    private ReactiveCollection<ICommand> _innerCollection = new
-    ReactiveCollection<ICommand>();
+    private ReactiveCollection<ICommand> _innerCollection = new ReactiveCollection<ICommand>();
 
     [Inject]
     private void Init()

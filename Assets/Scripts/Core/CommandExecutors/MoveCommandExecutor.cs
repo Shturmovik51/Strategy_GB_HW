@@ -10,7 +10,7 @@ namespace Core.CommandExecutors
 {
     public class MoveCommandExecutor : CommandExecutorBase<IMoveCommand>
     {
-        [SerializeField] private UnitMovementStop _stop;        
+        [SerializeField] private UnitMovementStop _stop;
         [SerializeField] private Animator _animator;
         [SerializeField] private StopCommandExecutor _stopCommandExecutor;
         private static readonly int Walk = Animator.StringToHash("Walk");

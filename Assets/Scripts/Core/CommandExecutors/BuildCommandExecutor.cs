@@ -10,6 +10,7 @@ public sealed class BuildCommandExecutor : CommandExecutorBase<IProduceUnitComma
 
     public override async Task ExecuteSpecificCommand(IProduceUnitCommand command)
     {  
-        Instantiate(command.UnitPrefab, new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity, _unitsParent);        
+        Instantiate(command.UnitPrefab, new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity, _unitsParent);
+        await Task.CompletedTask;
     }
 }

@@ -14,6 +14,7 @@ namespace Core.CommandExecutors
             var produceCommandExecutor = GetComponent<ProduceUnitCommandExecutor>();
             produceCommandExecutor.SetStackPoint(command.Point);
             Debug.Log($"{command.Point} is set as stack position for units!");
+            await Task.CompletedTask;
         }
     }
 }

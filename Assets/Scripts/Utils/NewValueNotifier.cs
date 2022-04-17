@@ -1,4 +1,4 @@
-﻿namespace UserControlSystem
+﻿namespace Utils
 {
     public class NewValueNotifier<TAwaited> : AwaiterBase<TAwaited>
     {
@@ -13,7 +13,7 @@
         private void ONNewValue(TAwaited obj)
         {
             _scriptableObjectValueBase.OnNewValue -= ONNewValue;
-            OnWaitFinish(obj);
+            ONWaitFinish(obj);
         }
     }
 }

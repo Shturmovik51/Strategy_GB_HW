@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Abstractions;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace UserControlSystem.UI.View
         [SerializeField] private GameObject _patrolButton;
         [SerializeField] private GameObject _stopButton;
         [SerializeField] private GameObject _produceUnitButton;
-        [SerializeField] private GameObject _setStackPointButton;
+        [SerializeField] private GameObject _setRallyButton;
 
         private Dictionary<Type, GameObject> _buttonsByExecutorType;
 
@@ -35,7 +36,7 @@ namespace UserControlSystem.UI.View
             _buttonsByExecutorType
                 .Add(typeof(ICommandExecutor<IProduceUnitCommand>), _produceUnitButton);
             _buttonsByExecutorType
-                .Add(typeof(ICommandExecutor<ISetStackPointCommand>), _setStackPointButton);
+                .Add(typeof(ICommandExecutor<ISetStackPointCommand>), _setRallyButton);
         }
         public void BlockInteractions(ICommandExecutor ce)
         {
@@ -53,7 +54,7 @@ namespace UserControlSystem.UI.View
             _patrolButton.GetComponent<Selectable>().interactable = value;
             _stopButton.GetComponent<Selectable>().interactable = value;
             _produceUnitButton.GetComponent<Selectable>().interactable = value;
-            _setStackPointButton.GetComponent<Selectable>().interactable = value;
+            _setRallyButton.GetComponent<Selectable>().interactable = value;
         }
 
         public void MakeLayout(IEnumerable<ICommandExecutor> commandExecutors, ICommandsQueue queue)
