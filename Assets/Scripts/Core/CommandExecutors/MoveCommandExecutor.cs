@@ -23,13 +23,7 @@ namespace Core.CommandExecutors
             _stopCommandExecutor.CancellationTokenSource = new CancellationTokenSource();
             try
             {
-                await _stop
-                    .WithCancellation
-                    (
-                        _stopCommandExecutor
-                            .CancellationTokenSource
-                            .Token
-                    );
+                await _stop.WithCancellation(_stopCommandExecutor.CancellationTokenSource.Token);
             }
             catch
             {
