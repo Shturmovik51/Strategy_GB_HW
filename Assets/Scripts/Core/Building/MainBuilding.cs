@@ -18,14 +18,24 @@ public sealed class MainBuilding : MonoBehaviour, ISelectable, IAttackable
 
     public void RecieveDamage(int amount)
     {
-        if (_health <= 0)
-        {
+        if (_health <= 0)        
             return;
-        }
+        
         _health -= amount;
-        if (_health <= 0)
-        {
+
+        if (_health <= 0)        
             Destroy(gameObject);
-        }
+        
+    }
+
+    public void RestoreHealth(int amount)
+    {
+        if (_health >= _maxHealth)        
+            return;
+        
+        _health += amount;
+
+        if (_health >= _maxHealth)
+            _health = _maxHealth;
     }
 }

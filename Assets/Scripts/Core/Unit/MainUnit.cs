@@ -36,6 +36,17 @@ namespace Core
             }
         }
 
+        public void RestoreHealth(int amount)
+        {
+            if (_health >= _maxHealth)
+                return;
+
+            _health += amount;
+
+            if (_health >= _maxHealth)
+                _health = _maxHealth;
+        }
+
         private async void Destroy()
         {
             await _stopCommand.ExecuteSpecificCommand(new StopCommand());
