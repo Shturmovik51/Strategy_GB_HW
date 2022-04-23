@@ -19,7 +19,7 @@ namespace Core
         [SerializeField] private Sprite _icon;
         [SerializeField] private Transform _pivotPoint;
         [SerializeField] private int _damage = 25;
-        private float _health = 100;
+        public float _health = 100;
 
 
         public void RecieveDamage(int amount)

@@ -1,4 +1,4 @@
-using System.Collections;
+using Abstractions;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -25,20 +25,27 @@ public class HealthBarsView : MonoBehaviour
     {
         if(_healthBars.Count != 0)
         {
-            for (int i = 0; i < _healthBars.Count; i++)            
-            {                
-                var pos = _mainCamera.WorldToScreenPoint(_healthBars[i].Owner.position);
+            for (int i = _healthBars.Count-1; i >= 0; i--)            
+            { 
+                var pos = _mainCamera.WorldToScreenPoint(_healthBars[i].OwnerTransform.position);
                 _healthBars[i].transform.position = pos + 50 * Vector3.up;
             }
-        }
+        }  
     }
 
-    public void AddBar(Transform ownerTransform)
+    public void AddBar(Transform ownerTransform, IHealthHolder ownerHeals)
     {
         var bar = Instantiate(_healthBarPref, _healthBarsHolder.transform);
         var barComponent = bar.GetComponent<HealthBar>();
-        barComponent.SetOwner(ownerTransform);
+        barComponent.SetOwner(ownerTransform, ownerHeals);
+        barComponent.OnEndHealth += RemoveBar;
         _healthBars.Add(barComponent);
+        
     }
 
+    private void RemoveBar(HealthBar bar)
+    {
+        _healthBars.Remove(bar);
+        if(bar != null) Destroy(bar.gameObject);
+    }
 }

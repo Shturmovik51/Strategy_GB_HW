@@ -33,11 +33,12 @@ namespace Core.CommandExecutors
             if (innerTask.TimeLeft <= 0)
             {
                 RemoveTaskAtIndex(0);
-                var unit = Instantiate(innerTask.UnitPrefab, transform.position, Quaternion.identity, _unitsParent);
-                if(_point != Vector3.zero)
+                //var unit = Instantiate(innerTask.UnitPrefab, transform.position, Quaternion.identity, _unitsParent);
+                var unit = _diContainer.InstantiatePrefab(innerTask.UnitPrefab, transform.position, Quaternion.identity, _unitsParent);
+                if (_point != Vector3.zero)
                     _ = unit.GetComponent<MoveCommandExecutor>().ExecuteSpecificCommand(new MoveCommand(_point));
                 var healthBarsView = innerTask.HealthBarViewGO.GetComponent<HealthBarsView>();
-                healthBarsView.AddBar(unit.transform);
+                healthBarsView.AddBar(unit.transform, unit.GetComponent<IHealthHolder>());
             }
         }
 
