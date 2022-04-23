@@ -3,7 +3,7 @@ using UniRx;
 using Zenject;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
-using UserControlSystem.CommandsRealization;
+using Core;
 
 public class ChomperCommandsQueue : MonoBehaviour, ICommandsQueue
 {

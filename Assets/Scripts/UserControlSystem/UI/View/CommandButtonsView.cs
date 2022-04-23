@@ -50,7 +50,7 @@ namespace UserControlSystem.UI.View
         private void SetInteractible(bool value)
         {
             _attackButton.GetComponent<Selectable>().interactable = value;
-            _moveButton.GetComponent<Selectable>().interactable = value;
+            //_moveButton.GetComponent<Selectable>().interactable = value;
             _patrolButton.GetComponent<Selectable>().interactable = value;
             _stopButton.GetComponent<Selectable>().interactable = value;
             _produceUnitButton.GetComponent<Selectable>().interactable = value;

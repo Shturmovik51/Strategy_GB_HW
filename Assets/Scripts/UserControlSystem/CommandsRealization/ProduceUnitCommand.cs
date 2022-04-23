@@ -13,5 +13,8 @@ namespace UserControlSystem.CommandsRealization
 
         public GameObject UnitPrefab => _unitPrefab;
         [InjectAsset("Chomper")] private GameObject _unitPrefab;
+
+        public GameObject HealthBarsViewGO => _healthBarsView.gameObject;
+        [Inject] private HealthBarsView _healthBarsView;
     }
 }

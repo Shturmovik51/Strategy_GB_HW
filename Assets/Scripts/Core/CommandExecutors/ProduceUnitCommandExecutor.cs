@@ -16,7 +16,7 @@ namespace Core.CommandExecutors
 
         [SerializeField] private Transform _unitsParent;
         [SerializeField] private int _maximumUnitsInQueue = 6;
-        [Inject] private DiContainer _diContainer;
+        [Inject] private DiContainer _diContainer;  
 
         private Vector3 _point;
         private ReactiveCollection<IUnitProductionTask> _queue = new ReactiveCollection<IUnitProductionTask>();
@@ -33,7 +33,11 @@ namespace Core.CommandExecutors
             if (innerTask.TimeLeft <= 0)
             {
                 RemoveTaskAtIndex(0);
-                Instantiate(innerTask.UnitPrefab, new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity, _unitsParent);
+                var unit = Instantiate(innerTask.UnitPrefab, transform.position, Quaternion.identity, _unitsParent);
+                if(_point != Vector3.zero)
+                    _ = unit.GetComponent<MoveCommandExecutor>().ExecuteSpecificCommand(new MoveCommand(_point));
+                var healthBarsView = innerTask.HealthBarViewGO.GetComponent<HealthBarsView>();
+                healthBarsView.AddBar(unit.transform);
             }
         }
 
@@ -55,13 +59,14 @@ namespace Core.CommandExecutors
 
         public override async Task ExecuteSpecificCommand(IProduceUnitCommand command)
         {
-            var instance = _diContainer.InstantiatePrefab(command.UnitPrefab, transform.position, Quaternion.identity, _unitsParent);
-            var queue = instance.GetComponent<ICommandsQueue>();
-            //_queue.Add(new UnitProductionTask(command.ProductionTime, command.Icon, command.UnitPrefab, command.UnitName));
+            //var instance = _diContainer.InstantiatePrefab(command.UnitPrefab, transform.position, Quaternion.identity, _unitsParent);
+            //var queue = instance.GetComponent<ICommandsQueue>();
+            _queue.Add(new UnitProductionTask(command.ProductionTime, command.Icon, command.UnitPrefab, command.UnitName, command.HealthBarsViewGO));
             //var mainBuilding = GetComponent<MainBuilding>();
-            var factionMember = instance.GetComponent<FactionMember>();
+            //var factionMember = instance.GetComponent<FactionMember>();
             //factionMember.SetFaction(GetComponent<FactionMember>().FactionId);
-            queue.EnqueueCommand(new MoveCommand(_point));
+            //queue.EnqueueCommand(new MoveCommand(_point));
+            await Task.CompletedTask;
         }
     }
 }

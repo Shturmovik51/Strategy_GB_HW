@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using Abstractions;
+using Core;
+using Core.CommandExecutors;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,6 +19,7 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
     [SerializeField] private Transform _groundTransform;
     
     private Plane _groundPlane;
+    private ISelectable _currentObject;
 
     [Inject]
     private void Init()
@@ -46,11 +49,28 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
             if (WeHit<ISelectable>(hits, out var selectable))
             {
                 _selectedObject.SetValue(selectable);
+                _currentObject = selectable;
             }
         });
         
         rmbHitsStream.Subscribe((ray, hits) =>
         {
+            if(_currentObject != null)
+            {
+                if(_currentObject.PivotPoint.gameObject.TryGetComponent<MoveCommandExecutor>(out var moveCommandExecutor))
+                {
+                    if (_groundPlane.Raycast(ray, out var enter))
+                    {
+                        if (!Input.GetKey(KeyCode.LeftShift))
+                            _ = moveCommandExecutor.TryExecuteCommand(new MoveCommand(ray.origin + ray.direction * enter));
+                        else
+                        {
+                            var queue = _currentObject.PivotPoint.gameObject.GetComponent<ICommandsQueue>();
+                            queue.EnqueueCommand(new MoveCommand(ray.origin + ray.direction * enter));
+                        }
+                    } 
+                }
+            }
             if (WeHit<IAttackable>(hits, out var attackable))
             {
                 _attackablesRMB.SetValue(attackable);
