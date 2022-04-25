@@ -13,6 +13,8 @@ namespace Core.CommandExecutors
         [SerializeField] private UnitMovementStop _stop;
         [SerializeField] private Animator _animator;
         [SerializeField] private StopCommandExecutor _stopCommandExecutor;
+        public StopCommandExecutor StopCommandExecutor => _stopCommandExecutor;
+
         private static readonly int Walk = Animator.StringToHash("Walk");
         private static readonly int Idle = Animator.StringToHash("Idle");
 

@@ -61,13 +61,14 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
                 {
                     if (_groundPlane.Raycast(ray, out var enter))
                     {
+                        _ = moveCommandExecutor.StopCommandExecutor.ExecuteSpecificCommand(new StopCommand());
                         if (!Input.GetKey(KeyCode.LeftShift))
                             _ = moveCommandExecutor.TryExecuteCommand(new MoveCommand(ray.origin + ray.direction * enter));
                         else
                         {
                             var queue = _currentObject.PivotPoint.gameObject.GetComponent<ICommandsQueue>();
                             queue.EnqueueCommand(new MoveCommand(ray.origin + ray.direction * enter));
-                        }
+                        }                        
                     } 
                 }
             }
