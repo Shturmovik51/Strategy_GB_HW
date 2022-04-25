@@ -28,7 +28,7 @@ public class HealthBarsView : MonoBehaviour
             for (int i = _healthBars.Count-1; i >= 0; i--)            
             { 
                 var pos = _mainCamera.WorldToScreenPoint(_healthBars[i].OwnerTransform.position);
-                _healthBars[i].transform.position = pos + 50 * Vector3.up;
+                _healthBars[i].transform.position = pos + _healthBars[i].HealthBarHeightPosition * Vector3.up;
             }
         }  
     }

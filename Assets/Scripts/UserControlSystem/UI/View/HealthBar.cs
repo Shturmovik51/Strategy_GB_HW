@@ -12,11 +12,13 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Image _healthBarImg;
     public Image HealthBarImg => _healthBarImg;
     public Transform OwnerTransform { get; private set; }
+    public int HealthBarHeightPosition { get; private set; }
 
     public void SetOwner(Transform ownerTransform, IHealthHolder ownerHeals)
     {
         OwnerTransform = ownerTransform;
         Observable.EveryUpdate().Subscribe(_ => HealthMonitor(ownerHeals.Health, ownerHeals.MaxHealth));
+        HealthBarHeightPosition = ownerHeals.HealthBarHeightPosition;
         
     }
     void HealthMonitor(float health, float maxHealth)

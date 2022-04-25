@@ -10,8 +10,12 @@ namespace Core
             var executors = gameObject.GetComponentsInChildren<ICommandExecutor>();
             foreach (var executor in executors)
             {
-                var baseType = executor.GetType().BaseType;
-                Container.Bind(baseType).FromInstance(executor);
+                var baseType = executor.GetType().BaseType;                
+                while (baseType != null)
+                {
+                    Container.Bind(baseType).FromInstance(executor);
+                    baseType = baseType.BaseType;
+                }
             }
         }
     }

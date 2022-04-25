@@ -12,6 +12,7 @@ namespace Core
         public Transform PivotPoint => _pivotPoint;
         public Sprite Icon => _icon;
         public int Damage => _damage;
+        public int HealthBarHeightPosition => _healthBarHeightPosition;
 
         [SerializeField] private Animator _animator;
         [SerializeField] private StopCommandExecutor _stopCommand;
@@ -19,8 +20,9 @@ namespace Core
         [SerializeField] private Sprite _icon;
         [SerializeField] private Transform _pivotPoint;
         [SerializeField] private int _damage = 25;
-        public float _health = 100;
+        [SerializeField] private int _healthBarHeightPosition;
 
+        public float _health = 100;
 
         public void RecieveDamage(int amount)
         {

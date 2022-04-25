@@ -2703,7 +2703,6 @@ GameObject:
   - component: {fileID: 8677150151254246506}
   - component: {fileID: 1662347671}
   - component: {fileID: 1662347672}
-  - component: {fileID: 6830855720136571419}
   - component: {fileID: 6618532771662704355}
   - component: {fileID: 8887381010297422626}
   - component: {fileID: 312526197}
@@ -2713,6 +2712,7 @@ GameObject:
   - component: {fileID: 5614341338052797669}
   - component: {fileID: 1165098643}
   - component: {fileID: 1165098644}
+  - component: {fileID: 3342964980238379166}
   m_Layer: 0
   m_Name: Chomper
   m_TagString: Untagged
@@ -2773,6 +2773,7 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 9908913e928c42d4f9f1891893bbc424, type: 3}
   _pivotPoint: {fileID: 3992309131016742373}
   _damage: 25
+  _healthBarHeightPosition: 50
   _health: 100
 --- !u!114 &9044150188675013297
 MonoBehaviour:
@@ -2872,20 +2873,6 @@ MonoBehaviour:
   _collisionDetector: {fileID: 312526197}
   _throttleFrames: 60
   _continuityThreshold: 10
---- !u!114 &6830855720136571419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3992309131016583621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030397e05d764aa5870d66b78c76e6d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 3992309131009313287}
-  _stopCommandExecutor: {fileID: 8887381010297422626}
 --- !u!114 &6618532771662704355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3009,6 +2996,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _factionId: 1
+--- !u!114 &3342964980238379166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3992309131016583621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14c1fc16fce1666428a905130942a006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 3992309131009313287}
+  _stopCommandExecutor: {fileID: 8887381010297422626}
 --- !u!1 &3992309131016583623
 GameObject:
   m_ObjectHideFlags: 0
