@@ -13,14 +13,14 @@ using Zenject;
 
 namespace Core.CommandExecutors
 {
-    public class AttackCommandExecutor : CommandExecutorBase<IAttackCommand>
+    public class MeleeAttackCommandExecutor : CommandExecutorBase<IAttackCommand>
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private StopCommandExecutor _stopCommandExecutor;
 
-        [Inject] private IHealthHolder _ourHealth;
-        [Inject(Id = "AttackDistance")] private float _attackingDistance;
-        [Inject(Id = "AttackPeriod")] private int _attackingPeriod;
+        [Inject(Id = "Chomper")] private IHealthHolder _ourHealth;
+        [Inject(Id = "ChomperAttackDistance")] private float _attackingDistance;
+        [Inject(Id = "ChomperAttackPeriod")] private int _attackingPeriod;
 
         private Vector3 _ourPosition;
         private Vector3 _targetPosition;
@@ -131,12 +131,12 @@ namespace Core.CommandExecutors
 
 	    	private event Action OnComplete;
 	
-    		private readonly AttackCommandExecutor _attackCommandExecutor;
+    		private readonly MeleeAttackCommandExecutor _attackCommandExecutor;
     		private readonly IAttackable _target;
 
     		private bool _isCancelled;
 
-    		public AttackOperation(AttackCommandExecutor attackCommandExecutor, IAttackable target)
+    		public AttackOperation(MeleeAttackCommandExecutor attackCommandExecutor, IAttackable target)
     		{
         		_target = target;
         		_attackCommandExecutor = attackCommandExecutor;

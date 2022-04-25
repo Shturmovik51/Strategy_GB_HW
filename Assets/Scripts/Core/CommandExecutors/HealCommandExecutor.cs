@@ -14,26 +14,12 @@ using Zenject;
 namespace Core.CommandExecutors
 {
     public class HealCommandExecutor : CommandExecutorBase<IHealCommand>
-    {                
+    {
+        private int healAmount = 15;
         public override async Task ExecuteSpecificCommand(IHealCommand command)
         {
-            Debug.Log(2);
-            //_targetTransform = (command.Target as Component).transform;
-            //_currentAttackOp = new AttackOperation(this, command.Target);
-            //Update();
-            //_stopCommandExecutor.CancellationTokenSource = new CancellationTokenSource();
-            //try
-            //{
-            //    await _currentAttackOp.WithCancellation(_stopCommandExecutor.CancellationTokenSource.Token);
-            //}
-            //catch
-            //{
-            //    _currentAttackOp.Cancel();
-            //}
-            //_animator.SetTrigger("Idle");
-            //_currentAttackOp = null;
-            //_targetTransform = null;
-            //_stopCommandExecutor.CancellationTokenSource = null;
+            command.Target.RestoreHealth(healAmount);
+            await Task.CompletedTask;
         }  
     }
 }

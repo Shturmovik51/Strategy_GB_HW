@@ -7,9 +7,9 @@ namespace Assets.Scripts.Abstractions
     {
         public override void InstallBindings()
         {
-            Container.Bind<IHealthHolder>().FromComponentInChildren();
-            Container.Bind<float>().WithId("AttackDistance").FromInstance(20f);
-            Container.Bind<int>().WithId("AttackPeriod").FromInstance(1500);
+            Container.Bind<IHealthHolder>().WithId("Grenadier").FromComponentInChildren();
+            Container.Bind<float>().WithId("GrenadierAttackDistance").FromInstance(20f);
+            Container.Bind<int>().WithId("GrenadierAttackPeriod").FromInstance(1500);
         }
     }
 }
