@@ -13,6 +13,7 @@ namespace Abstractions.Commands
                 await ExecuteSpecificCommand(specificCommand);
             }
         }
+
         public abstract Task ExecuteSpecificCommand(T command);
     }
 }

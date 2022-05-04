@@ -1,28 +1,34 @@
-using System;
-using Utils;
+﻿using System;
 
-public abstract class AwaiterBase<TAwaited> : IAwaiter<TAwaited>
+namespace Utils
 {
-    private Action _continuation;
-    private bool _isCompleted;
-    private TAwaited _result;
-    public bool IsCompleted => _isCompleted;
-    public TAwaited GetResult() => _result;
-    public void OnCompleted(Action continuation)
+    public abstract class AwaiterBase<TAwaited> : IAwaiter<TAwaited>
     {
-        if (_isCompleted)
+        private Action _continuation;
+        private bool _isCompleted;
+        private TAwaited _result;
+
+        public bool IsCompleted => _isCompleted;
+
+        public TAwaited GetResult() => _result;
+        
+        public void OnCompleted(Action continuation)
         {
-            continuation?.Invoke();
+            if (_isCompleted)
+            {
+                continuation?.Invoke();
+            }
+            else
+            {
+                _continuation = continuation;
+            }
         }
-        else
+
+        protected void ONWaitFinish(TAwaited result)
         {
-            _continuation = continuation;
+            _result = result;
+            _isCompleted = true;
+            _continuation?.Invoke();
         }
-    }
-    protected void OnWaitFinish(TAwaited result)
-    {
-        _result = result;
-        _isCompleted = true;
-        _continuation?.Invoke();
     }
 }

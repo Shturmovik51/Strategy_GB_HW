@@ -1,9 +1,12 @@
 ﻿using System.Linq;
 using Abstractions;
+using Core;
+using Core.CommandExecutors;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UserControlSystem;
+using Zenject;
 
 public sealed class MouseInteractionPresenter : MonoBehaviour
 {
@@ -16,48 +19,70 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
     [SerializeField] private Transform _groundTransform;
     
     private Plane _groundPlane;
+    private ISelectable _currentObject;
 
-    private void Start()
+    [Inject]
+    private void Init()
     {
         _groundPlane = new Plane(_groundTransform.up, 0);
 
-        var NotUiClick = Observable.EveryUpdate().Where(click => !_eventSystem.IsPointerOverGameObject());
+        var nonBlockedByUiFramesStream = Observable.EveryUpdate()
+            .Where(_ => !_eventSystem.IsPointerOverGameObject());
 
-        var leftMouseClick = NotUiClick.Where(click => Input.GetMouseButtonUp(0))
-                                       .Select(ray => _camera.ScreenPointToRay(Input.mousePosition))
-                                       .Select(ray => Physics.RaycastAll(ray))
-                                       .Subscribe(LMBClick); ;
+        var leftClicksStream = nonBlockedByUiFramesStream
+            .Where(_ => Input.GetMouseButtonDown(0));
+        var rightClicksStream = nonBlockedByUiFramesStream
+            .Where(_ => Input.GetMouseButtonDown(1));
 
-        var rightMouseClick = NotUiClick.Where(click => Input.GetMouseButtonUp(1))
-                                        .Select(ray => _camera.ScreenPointToRay(Input.mousePosition))
-                                        .Select(ray => (ray, Physics.RaycastAll(ray)))
-                                        .Subscribe(r => RMBClick(r.Item1, r.Item2));
-    }    
+        var lmbRays = leftClicksStream
+            .Select(_ => _camera.ScreenPointToRay(Input.mousePosition));
+        var rmbRays = rightClicksStream
+            .Select(_ => _camera.ScreenPointToRay(Input.mousePosition));
 
-    private void LMBClick(RaycastHit[] hits)
-    {
-        if (WeHit<ISelectable>(hits, out var selectable))
+        var lmbHitsStream = lmbRays
+            .Select(ray => Physics.RaycastAll(ray));
+        var rmbHitsStream = rmbRays
+            .Select(ray => (ray, Physics.RaycastAll(ray)));
+
+        lmbHitsStream.Subscribe(hits =>
         {
-            _selectedObject.SetValue(selectable);
-        }
-        else
+            if (WeHit<ISelectable>(hits, out var selectable))
+            {
+                _selectedObject.SetValue(selectable);
+                _currentObject = selectable;
+            }
+        });
+        
+        rmbHitsStream.Subscribe((ray, hits) =>
         {
-            _selectedObject.SetValue(null);
-        }
+            if(_currentObject != null)
+            {
+                if(_currentObject.PivotPoint.gameObject.TryGetComponent<MoveCommandExecutor>(out var moveCommandExecutor))
+                {
+                    if (_groundPlane.Raycast(ray, out var enter))
+                    {
+                        _ = moveCommandExecutor.StopCommandExecutor.ExecuteSpecificCommand(new StopCommand());
+                        if (!Input.GetKey(KeyCode.LeftShift))
+                            _ = moveCommandExecutor.TryExecuteCommand(new MoveCommand(ray.origin + ray.direction * enter));
+                        else
+                        {
+                            var queue = _currentObject.PivotPoint.gameObject.GetComponent<ICommandsQueue>();
+                            queue.EnqueueCommand(new MoveCommand(ray.origin + ray.direction * enter));
+                        }                        
+                    } 
+                }
+            }
+            if (WeHit<IAttackable>(hits, out var attackable))
+            {
+                _attackablesRMB.SetValue(attackable);
+            }
+            else if (_groundPlane.Raycast(ray, out var enter))
+            {
+                _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
+            }
+        });
     }
-
-    private void RMBClick(Ray ray, RaycastHit[] hits)
-    {
-        if (WeHit<IAttackable>(hits, out var attackable))
-        {
-            _attackablesRMB.SetValue(attackable);
-        }
-        else if (_groundPlane.Raycast(ray, out var enter))
-        {
-            _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
-        }
-    }
-
+    
     private bool WeHit<T>(RaycastHit[] hits, out T result) where T : class
     {
         result = default;

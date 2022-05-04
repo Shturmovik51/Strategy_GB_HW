@@ -1,10 +1,10 @@
-﻿using Abstractions;
+﻿using System.Threading.Tasks;
+using Abstractions;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
-using System.Threading.Tasks;
+using Assets.Scripts.Core;
 using UniRx;
 using UnityEngine;
-using UserControlSystem.CommandsRealization;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -14,13 +14,11 @@ namespace Core.CommandExecutors
     {
         public IReadOnlyReactiveCollection<IUnitProductionTask> Queue => _queue;
 
-        [Inject] private DiContainer _diContainer;
-
         [SerializeField] private Transform _unitsParent;
         [SerializeField] private int _maximumUnitsInQueue = 6;
-        [SerializeField] private Transform _spawnPoint;
+        [Inject] private DiContainer _diContainer;  
 
-        private Vector3 _stackPoint;
+        private Vector3 _point;
         private ReactiveCollection<IUnitProductionTask> _queue = new ReactiveCollection<IUnitProductionTask>();
 
         private void Update()
@@ -35,18 +33,13 @@ namespace Core.CommandExecutors
             if (innerTask.TimeLeft <= 0)
             {
                 RemoveTaskAtIndex(0);
-                var instantiatedObject = 
-                    _diContainer.InstantiatePrefab(innerTask.UnitPrefab, _spawnPoint.position, Quaternion.identity, _unitsParent);
-                var moveCommandExecutor = instantiatedObject.GetComponent<MoveCommandExecutor>();
-
-                var task = moveCommandExecutor.ExecuteSpecificCommand(
-                    new MoveCommand(_stackPoint == Vector3.zero ? _spawnPoint.position : _stackPoint));
+                //var unit = Instantiate(innerTask.UnitPrefab, transform.position, Quaternion.identity, _unitsParent);
+                var unit = _diContainer.InstantiatePrefab(innerTask.UnitPrefab, transform.position, Quaternion.identity, _unitsParent);
+                if (_point != Vector3.zero)
+                    _ = unit.GetComponent<MoveCommandExecutor>().ExecuteSpecificCommand(new MoveCommand(_point));
+                var healthBarsView = innerTask.HealthBarViewGO.GetComponent<HealthBarsView>();
+                healthBarsView.AddBar(unit.transform, unit.GetComponent<IHealthHolder>());
             }
-        }
-
-        public void SetStackPoint(Vector3 point)
-        {
-            _stackPoint = point;
         }
 
         public void Cancel(int index) => RemoveTaskAtIndex(index);
@@ -60,9 +53,21 @@ namespace Core.CommandExecutors
             _queue.RemoveAt(_queue.Count - 1);
         }
 
+        public void SetStackPoint(Vector3 point)
+        {
+            _point = point;
+        }
+
         public override async Task ExecuteSpecificCommand(IProduceUnitCommand command)
-        {             
-            _queue.Add(new UnitProductionTask(command.ProductionTime, command.Icon, command.UnitPrefab, command.UnitName));
+        {
+            //var instance = _diContainer.InstantiatePrefab(command.UnitPrefab, transform.position, Quaternion.identity, _unitsParent);
+            //var queue = instance.GetComponent<ICommandsQueue>();
+            _queue.Add(new UnitProductionTask(command.ProductionTime, command.Icon, command.UnitPrefab, command.UnitName, command.HealthBarsViewGO));
+            //var mainBuilding = GetComponent<MainBuilding>();
+            //var factionMember = instance.GetComponent<FactionMember>();
+            //factionMember.SetFaction(GetComponent<FactionMember>().FactionId);
+            //queue.EnqueueCommand(new MoveCommand(_point));
+            await Task.CompletedTask;
         }
     }
 }

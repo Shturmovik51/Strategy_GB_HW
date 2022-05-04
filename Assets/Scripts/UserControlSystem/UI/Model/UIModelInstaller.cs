@@ -1,4 +1,5 @@
-﻿using Abstractions.Commands.CommandsInterfaces;
+﻿using Abstractions;
+using Abstractions.Commands.CommandsInterfaces;
 using UnityEngine;
 using UserControlSystem.UI.Model;
 using Zenject;
@@ -8,6 +9,7 @@ namespace UserControlSystem
     public sealed class UIModelInstaller : MonoInstaller
     {
         [SerializeField] private Sprite _chomperSprite;
+        [SerializeField] private Sprite _grenadierSprite;
 
         public override void InstallBindings()
         {
@@ -23,12 +25,20 @@ namespace UserControlSystem
                 .To<StopCommandCommandCreator>().AsTransient();
             Container.Bind<CommandCreatorBase<ISetStackPointCommand>>()
                 .To<SetStackPointCommandCommandCreator>().AsTransient();
+            Container.Bind<CommandCreatorBase<IHealCommand>>()
+               .To<HealCommandCommandCreator>().AsTransient();
+            Container.Bind<CommandCreatorBase<IProduceGrenadierCommand>>()
+               .To<ProduceGrenadierCommandCommandCreator>().AsTransient();
 
             Container.Bind<CommandButtonsModel>().AsTransient();
             
-            Container.Bind<float>().WithId("Chomper").FromInstance(5f);
+            Container.Bind<float>().WithId("Chomper").FromInstance(5f); //ProductionTime
             Container.Bind<string>().WithId("Chomper").FromInstance("Chomper");
             Container.Bind<Sprite>().WithId("Chomper").FromInstance(_chomperSprite);
+
+            Container.Bind<float>().WithId("Grenadier").FromInstance(7f); //ProductionTime
+            Container.Bind<string>().WithId("Grenadier").FromInstance("Grenadier");
+            Container.Bind<Sprite>().WithId("Grenadier").FromInstance(_grenadierSprite);
 
             Container.Bind<BottomCenterModel>().AsSingle();
         }

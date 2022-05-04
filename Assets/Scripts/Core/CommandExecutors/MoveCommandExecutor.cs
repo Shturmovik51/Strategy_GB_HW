@@ -10,9 +10,11 @@ namespace Core.CommandExecutors
 {
     public class MoveCommandExecutor : CommandExecutorBase<IMoveCommand>
     {
-        [SerializeField] private UnitMovementStop _stop;        
+        [SerializeField] private UnitMovementStop _stop;
         [SerializeField] private Animator _animator;
         [SerializeField] private StopCommandExecutor _stopCommandExecutor;
+        public StopCommandExecutor StopCommandExecutor => _stopCommandExecutor;
+
         private static readonly int Walk = Animator.StringToHash("Walk");
         private static readonly int Idle = Animator.StringToHash("Idle");
 
@@ -23,13 +25,7 @@ namespace Core.CommandExecutors
             _stopCommandExecutor.CancellationTokenSource = new CancellationTokenSource();
             try
             {
-                await _stop
-                    .WithCancellation
-                    (
-                        _stopCommandExecutor
-                            .CancellationTokenSource
-                            .Token
-                    );
+                await _stop.WithCancellation(_stopCommandExecutor.CancellationTokenSource.Token);
             }
             catch
             {

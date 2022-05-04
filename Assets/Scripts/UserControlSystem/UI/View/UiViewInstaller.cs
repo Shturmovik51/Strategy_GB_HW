@@ -6,10 +6,8 @@ namespace UserControlSystem.UI.View
     {
         public override void InstallBindings()
         {
-            Container
-                .Bind<BottomCenterView>()
-                .FromComponentInHierarchy()
-                .AsSingle();
+            Container.Bind<BottomCenterView>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<HealthBarsView>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

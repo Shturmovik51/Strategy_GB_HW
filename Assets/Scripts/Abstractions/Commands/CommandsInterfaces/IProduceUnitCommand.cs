@@ -6,6 +6,7 @@ namespace Abstractions.Commands.CommandsInterfaces
     {
         float ProductionTime { get; }
         GameObject UnitPrefab { get; }
+        GameObject HealthBarsViewGO { get; }
         string UnitName { get; }
     }
 }
